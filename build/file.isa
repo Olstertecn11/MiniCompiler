@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+
+
+
+
+principal(){
+  int x = 10;
+  si(x == 10){
+    cout << "Hola mundo" << endl;
+  }
+
+  si(x == 20){
+    cout << "es 20 \n";
+  }
+}
