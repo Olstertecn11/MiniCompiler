@@ -1,24 +1,9 @@
+#include "analyzer.cpp"
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>
 #include <string>
 using namespace std;
-
-int get_position(string line, string ref) {
-  for (int i = 0; i < line.length(); i++) {
-    string cadena = "";
-    for (int j = i; j < line.length(); j++) {
-      cadena += line[j];
-      if (cadena.length() == ref.length()) {
-        if (cadena == ref)
-          return i;
-        else
-          cadena = "";
-      }
-    }
-  }
-  return -1;
-}
 
 void leerArchivo() {
   ifstream archivo;
@@ -30,7 +15,7 @@ void leerArchivo() {
       string cadena;
       getline(archivo, cadena);
       if (cadena.find("si(") != string::npos) {
-        int pos = get_position(cadena, "si(");
+        int pos = Analyzer::get_position(cadena, "si(");
         if (pos != -1) {
           string aux = "";
           string ref = "if(";
