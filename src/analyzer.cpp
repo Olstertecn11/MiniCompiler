@@ -13,7 +13,7 @@ string Analyzer::get_new_string(std::string ref, std::string cadena,
 void Analyzer::read_file() {
 
   ofstream new_file;
-  new_file.open("file.cpp", ios::app);
+  new_file.open("file.cpp", ios::out);
   ifstream archivo;
   archivo.open("file.isa", ios::in);
   if (archivo.fail() || new_file.fail()) {
@@ -48,4 +48,18 @@ void Analyzer::read_file() {
   }
   archivo.close();
   new_file.close();
+  this->compile_new_code();
+}
+
+void Analyzer::compile_new_code() {
+  const string file_name = "file.cpp";
+
+  std::string command = "g++ -std=c++11  -o output.exe ";
+  std::string completeCommand = command + file_name;
+  int result = system(completeCommand.c_str());
+  if (result == 0) {
+    cout << "Compilacion terminada" << endl;
+  } else {
+    cout << "Error en compilacion" << endl;
+  }
 }
