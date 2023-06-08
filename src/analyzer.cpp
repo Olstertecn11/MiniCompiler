@@ -1,4 +1,5 @@
 #include "./include/analyzer.h"
+#include <string>
 
 int Analyzer::get_position(string line, string ref) {
   for (int i = 0; i < line.length(); i++) {
@@ -32,4 +33,28 @@ string Analyzer::get_new_string(std::string ref, std::string cadena) {
   } else {
     return "";
   }
+}
+
+void Analyzer::read_file() {
+  ifstream archivo;
+  archivo.open("file.isa", ios::in);
+  if (archivo.fail()) {
+    cout << "Error abriendo el archivo \n";
+  } else {
+    while (!archivo.eof()) {
+      string cadena;
+      getline(archivo, cadena);
+
+      if (cadena.find("si(") != string::npos) {
+        cadena = this->get_new_string("if(", cadena);
+      }
+
+      if (cadena.find("principal(") != string::npos) {
+        cout << "here" << endl;
+        cadena = this->get_new_string("main(", cadena);
+      }
+      cout << cadena << endl;
+    }
+  }
+  archivo.close();
 }
