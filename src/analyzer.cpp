@@ -12,9 +12,11 @@ string Analyzer::get_new_string(std::string ref, std::string cadena,
 
 void Analyzer::read_file() {
 
+  ofstream new_file;
+  new_file.open("file.cpp", ios::app);
   ifstream archivo;
   archivo.open("file.isa", ios::in);
-  if (archivo.fail()) {
+  if (archivo.fail() || new_file.fail()) {
     cout << "Error abriendo el archivo \n";
   } else {
     while (!archivo.eof()) {
@@ -33,8 +35,17 @@ void Analyzer::read_file() {
         string aux = this->get_new_string("#incluir", cadena, "#include");
         cadena = aux;
       }
-      cout << cadena << endl;
+      if (cadena.find("imprimir") != string::npos) {
+        string aux = this->get_new_string("imprimir", cadena, "cout");
+        cadena = aux;
+      }
+      if (cadena.find("_numero") != string::npos) {
+        string aux = this->get_new_string("_numero", cadena, "int");
+        cadena = aux;
+      }
+      new_file << cadena << endl;
     }
   }
   archivo.close();
+  new_file.close();
 }
